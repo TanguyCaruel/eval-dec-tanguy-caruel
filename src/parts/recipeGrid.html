@@ -1,0 +1,50 @@
+<!-- si aucune recette -->
+<p x-show="filteredRecipes.length === 0" class="col-span-full text-gray-500 text-center mb-6">
+  Aucune recette trouvée.
+</p>
+
+<!-- grille des recettes -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" x-show="filteredRecipes.length > 0">
+  <template x-for="recipe in filteredRecipes" :key="recipe.id">
+    <!-- Article rendu entièrement cliquable -->
+    <article
+      @click="selectRecipe(recipe)"
+      class="flex flex-col border border-gray-200 rounded-lg shadow-sm p-4 bg-white hover:shadow-md transition duration-200 hover:cursor-pointer">
+      <!-- Image de la recette -->
+      <figure class="relative h-40 bg-gray-100 rounded-md overflow-hidden mb-4">
+        <img :src="recipe.imageUrl" class="h-full w-full object-cover" loading="lazy" />
+      </figure>
+
+      <!-- Tag du niveau de difficulté -->
+      <div class="mb-2">
+        <span class="inline-block bg-orange-100 text-orange-600 text-xs font-semibold px-2 py-1 rounded-full"
+          x-text="recipe.difficulty"></span>
+      </div>
+
+      <h3 class="text-lg font-semibold text-gray-800 mb-2" x-text="recipe.title"></h3>
+      <p class="text-sm text-gray-600 mb-2">
+        Temps de préparation: <span x-text="recipe.preparationTime + ' min'"></span>
+      </p>
+      <p class="text-sm text-gray-600 mb-4">
+        Catégorie: <span class="font-medium capitalize" x-text="recipe.category"></span>
+      </p>
+
+      <!-- Boutons d'action -->
+      <div class="mt-auto flex justify-between items-center">
+        <!-- Bouton Voir les détails -->
+        <button type="button"
+          class="flex-1 mr-2 bg-orange-500 text-white font-semibold py-2 rounded hover:bg-orange-600 transition duration-200"
+          @click.stop="selectRecipe(recipe)">
+          Voir les détails
+        </button>
+
+        <!-- Bouton Favori -->
+        <button type="button"
+          class="flex items-center justify-center w-10 h-10 rounded-md bg-orange-100 text-orange-600 hover:bg-orange-200 transition duration-200"
+          @click.stop="toggleFavorite(recipe)">
+          <i :class="isFavorite(recipe) ? 'ph-fill ph-star' : 'ph ph-star'" class="text-2xl"></i>
+        </button>
+      </div>
+    </article>
+  </template>
+</div>

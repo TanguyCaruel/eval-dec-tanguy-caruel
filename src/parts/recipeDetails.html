@@ -1,0 +1,80 @@
+<section x-data="recipeDetails()" class="relative">
+  <!-- Overlay -->
+  <div class="fixed inset-0 bg-black/40 z-50 flex items-center justify-center " x-show="selectedRecipe"
+    @click.self="closeRecipe">
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-3xl relative p-6 text-gray-700">
+
+      <!-- Barre de progression -->
+      <div class="w-full mb-4">
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-sm font-medium text-gray-700">Étape <span x-text="currentStep + 1"></span>/<span
+              x-text="selectedRecipe.instructions.length"></span></span>
+        </div>
+        <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+          <div class="h-2 bg-orange-500 transition-all duration-300"
+            :style="{ width: ((currentStep + 1) / selectedRecipe.instructions.length * 100) + '%' }">
+          </div>
+        </div>
+      </div>
+
+      <!-- Bouton Fermer -->
+      <button
+        class="absolute top-2 right-2 h-8 w-8 bg-gray-100 text-gray-800 rounded-full shadow-md hover:bg-red-100 hover:text-red-600"
+        @click="closeRecipe">
+        <i class="text-lg ph ph-x"></i>
+      </button>
+
+      <!-- Contenu de la recette -->
+      <div x-if="selectedRecipe">
+
+        <!-- Image -->
+        <div class="mb-4">
+          <img :src="selectedRecipe.imageUrl" :alt="selectedRecipe.title" class="w-full h-64 object-cover rounded-md" />
+        </div>
+
+        <!-- Meta (Difficulté, Temps, Catégorie) -->
+        <div class="mb-6 flex flex-col gap-2">
+          <div class="mb-2">
+            <span class="inline-block bg-orange-100 text-orange-600 text-xs font-semibold px-2 py-1 rounded-full"
+              x-text="selectedRecipe.difficulty"></span>
+          </div>
+          <div class="text-sm">
+            <span class="font-medium">Temps de préparation :</span> <span
+              x-text="selectedRecipe.preparationTime + ' min'"></span>
+          </div>
+          <div class="text-sm">
+            <span class="font-medium">Catégorie :</span> <span class="capitalize"
+              x-text="selectedRecipe.category"></span>
+          </div>
+        </div>
+
+        <!-- Ingrédients -->
+        <h4 class="text-xl font-semibold text-gray-800 mb-2">Ingrédients</h4>
+        <ul class="list-disc list-inside mb-6 text-gray-700">
+          <template x-for="(ingredient, index) in selectedRecipe.ingredients" :key="index">
+            <li x-text="ingredient.quantity + ' ' + ingredient.unit + ' ' + ingredient.name"></li>
+          </template>
+        </ul>
+
+        <!-- Instructions -->
+        <h4 class="text-xl font-semibold text-gray-800 mb-2">Instructions</h4>
+        <p class="list-decimal list-inside space-y-2 text-gray-700" x-text="selectedRecipe.instructions[currentStep]">
+        </p>
+
+
+        <!-- Boutons Navigation Étapes -->
+        <div class="flex justify-between mt-6">
+          <button @click="prevStep" :disabled="currentStep === 0"
+            class="bg-orange-500 text-white font-semibold py-2 px-4 rounded hover:bg-orange-600 transition duration-200 disabled:opacity-50">
+            Précédent
+          </button>
+          <button @click="nextStep" :disabled="selectedRecipe && currentStep === selectedRecipe.instructions.length - 1"
+            class="bg-orange-500 text-white font-semibold py-2 px-4 rounded hover:bg-orange-600 transition duration-200 disabled:opacity-50">
+            Suivant
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

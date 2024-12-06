@@ -1,0 +1,56 @@
+<div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 space-y-4 md:space-y-0"> 
+  
+  <!-- Barre de recherche -->
+  <div class="relative">
+    <input type="text"
+      class="border border-gray-300 rounded-md pl-10 pr-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+      x-model="searchQuery" placeholder="Rechercher une recette (ex: pizza, tarte)" />
+    <span class="absolute inset-y-0 left-3 flex items-center">
+      <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8" stroke-linecap="round" stroke-linejoin="round" />
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35" />
+      </svg>
+    </span>
+  </div>
+
+  <!-- Onglets Difficulté -->
+<div class="flex space-x-4">
+    <button @click="difficulty=''"
+        :class="difficulty === '' ? 'bg-orange-100 text-orange-500 py-1 px-2 rounded hover:bg-orange-200' : 'bg-gray-100 text-gray-600 py-1 px-2 rounded hover:bg-gray-200'"
+        class="pb-1 font-medium focus:outline-none">
+        Toutes
+    </button>
+    <button @click="difficulty='facile'"
+        :class="difficulty === 'facile' ? 'bg-orange-100 text-orange-500 py-1 px-2 rounded hover:bg-orange-200' : 'bg-gray-100 text-gray-600 py-1 px-2 rounded hover:bg-gray-200'"
+        class="pb-1 font-medium focus:outline-none">
+        Facile
+    </button>
+    <button @click="difficulty='moyenne'"
+        :class="difficulty === 'moyenne' ? 'bg-orange-100 text-orange-500 py-1 px-2 rounded hover:bg-orange-200' : 'bg-gray-100 text-gray-600 py-1 px-2 rounded hover:bg-gray-200'"
+        class="pb-1 font-medium focus:outline-none">
+        Moyenne
+    </button>
+    <button @click="difficulty='difficile'"
+        :class="difficulty === 'difficile' ? 'bg-orange-100 text-orange-500 py-1 px-2 rounded hover:bg-orange-200' : 'bg-gray-100 text-gray-600 py-1 px-2 rounded hover:bg-gray-200'"
+        class="pb-1 font-medium focus:outline-none">
+        Difficile
+    </button>
+</div>
+<!-- Toggle des favoris -->
+<div class="flex items-center">
+  <label class="flex items-center cursor-pointer">
+    <input type="checkbox" class="sr-only" @change="showFavorites = !showFavorites" :checked="showFavorites">
+    <div :class="showFavorites ? 'bg-orange-500' : 'bg-gray-300'"
+         class="w-10 h-5 rounded-full transition-colors duration-200">
+      <div :class="showFavorites ? 'translate-x-5 bg-orange-100' : 'translate-x-0 bg-white'"
+           class="w-5 h-5 rounded-full shadow transition-transform transform duration-200"></div>
+    </div>
+    <span class="ml-3 text-sm font-medium" :class="showFavorites ? 'text-orange-500' : 'text-gray-600'">
+      Favoris uniquement
+    </span>
+  </label>
+</div>
+
+
+
+</div>
